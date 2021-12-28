@@ -16,19 +16,19 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
-import { ItemCollectionComponent } from './item-collection/item-collection.component';
-import { PostCreateComponent } from './post-create/post-create.component';
+import { PostCreateComponent } from './posts/post-create/post-create.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { PostListComponent } from './post-list/post-list.component';
+import { PostListComponent } from './posts/post-list/post-list.component';
+import { HeaderComponent } from './header/header.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    ItemCollectionComponent,
     PostCreateComponent,
-    PostListComponent
+    PostListComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,

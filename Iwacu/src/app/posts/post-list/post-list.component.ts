@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { PostCreateComponent } from '../post-create/post-create.component';
-import { Post } from '../models/post.model';
-import { PostsService } from "../services/post.service";
+import { Post } from '../../models/post.model';
+import { PostsService } from "../../services/post.service";
 import { Subscription } from 'rxjs';
 
 
