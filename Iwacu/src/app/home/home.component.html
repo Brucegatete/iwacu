@@ -1,17 +1,14 @@
-<div class="navbar is-dark has-text-centered">
+<mat-toolbar color="primary">
+  <span routerLink="">Iwacu</span>
+  <span class="spacer"></span>
+  <ul>
+    <li>
+      <a mat-button routerLink="/create" routerLinkActive="mat-accent">Create new Post</a>
+    </li>
+  </ul>
 
-  <!--logo-->
-  <div class="navbar-brand">
-    <a class="navbar-item">
-     Welcome Iwacu
-    </a>
-  </div>
-
-  <router-outlet></router-outlet>
-</div>
-
+</mat-toolbar>
 <main>
-  <app-post-create></app-post-create>
-  <app-post-list></app-post-list>
+  <router-outlet></router-outlet>
 </main>
 
