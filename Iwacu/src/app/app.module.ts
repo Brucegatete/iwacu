@@ -9,9 +9,8 @@ import { ReactiveFormsModule } from "@angular/forms";
 import { HttpClientModule } from "@angular/common/http"
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-
-
-
+import { MatGridListModule } from '@angular/material/grid-list';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -41,7 +40,10 @@ import { HeaderComponent } from './header/header.component';
     ReactiveFormsModule,
     HttpClientModule,
     MatToolbarModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatGridListModule,
+    FlexLayoutModule
+
   ],
   providers: [],
   bootstrap: [AppComponent]

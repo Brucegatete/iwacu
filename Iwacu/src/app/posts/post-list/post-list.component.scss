@@ -8,10 +8,19 @@
 }
 
 .post-image {
-  width: 50%;
+  width: 100%;
+  margin: 1rem 0;
 }
 
 .post-image img {
   width: 50%;
   box-shadow: 1px 1px rgba(0, 0, 0, 5);
+}
+
+listings {
+  padding: 16px;
+}
+
+.listings > mat-card {
+  width: 200px;
 }
