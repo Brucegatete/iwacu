@@ -10,7 +10,7 @@ const postRoutes = require('./routes/posts')
 
 const app = express();
 
-mongoose.connect('mongodb+srv://bruce:u84WqNdw6tFvLQf@cluster0.dch3m.mongodb.net/iwacu-db?retryWrites=true&w=majority')
+mongoose.connect('mongodb+srv://bruce:yyYJvDICXwgUf6GP@cluster0.dch3m.mongodb.net/iwacu-db?retryWrites=true&w=majority')
   .then(()=> {
     console.log('Connected to the database!');
   })
