@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "dist/Iwacu",
+    "public": "y",
     "ignore": [
       "firebase.json",
       "**/.*",
