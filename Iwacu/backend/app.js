@@ -10,7 +10,7 @@ const postRoutes = require('./routes/posts')
 
 const app = express();
 
-mongoose.connect('mongodb+srv://bruce:u84WqNdw6tFvLQf@cluster0.dch3m.mongodb.net/iwacu-db?retryWrites=true&w=majority')
+mongoose.connect('mongodb+srv://bruce:bUbsoserjdvC8WEZ@cluster0.dch3m.mongodb.net/iwacu-db')
   .then(()=> {
     console.log('Connected to the database!');
   })
@@ -27,7 +27,7 @@ app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader(
     "Access-Control-Allow-Headers",
-    "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With"
+    "Origin, X-Requested-With, Content-Type, Accept"
   );
   res.setHeader(
     "Access-Control-Allow-Methods",
