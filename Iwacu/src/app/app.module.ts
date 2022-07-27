@@ -15,8 +15,6 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { AppRoutingModule } from './app-routing.module';
 
 
-
-
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { PostCreateComponent } from './posts/post-create/post-create.component';
