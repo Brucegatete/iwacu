@@ -13,6 +13,8 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { AppRoutingModule } from './app-routing.module';
+import {MatDialogModule} from '@angular/material/dialog';
+
 
 
 
@@ -24,7 +26,9 @@ import { PostListComponent } from './posts/post-list/post-list.component';
 import { HeaderComponent } from './header/header.component';
 import { LoginComponent } from 'src/app/auth/login/login.component';
 import { SignupComponent } from './auth/signup/signup.component';
+import { ErrorComponent } from './error/error.component';
 import { AuthInterceptor } from './interceptors/auth-interceptor'
+import { ErrorInterceptor } from './interceptors/error-interceptor';
 
 
 @NgModule({
@@ -35,7 +39,8 @@ import { AuthInterceptor } from './interceptors/auth-interceptor'
     PostListComponent,
     HeaderComponent,
     LoginComponent,
-    SignupComponent
+    SignupComponent,
+    ErrorComponent
   ],
   imports: [
     BrowserModule,
@@ -44,6 +49,7 @@ import { AuthInterceptor } from './interceptors/auth-interceptor'
     MatInputModule,
     MatCardModule,
     MatButtonModule,
+    MatDialogModule,
     MatExpansionModule,
     MatPaginatorModule,
     ReactiveFormsModule,
@@ -56,8 +62,10 @@ import { AuthInterceptor } from './interceptors/auth-interceptor'
 
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [ErrorComponent]
 })
 export class AppModule { }
