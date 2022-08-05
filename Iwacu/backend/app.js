@@ -3,17 +3,16 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 var cors = require('cors');
 const path = require("path");
-
-const { title } = require('process');
-
 const postRoutes = require('./routes/posts')
 const userRoutes = require('./routes/user')
 
-const app = express();
+const app = express()
+
 
 mongoose.connect('mongodb+srv://bruce:jR7A4Bw86YHEFg5p@cluster0.dch3m.mongodb.net/iwacu-db')
   .then(()=> {
     console.log('Connected to the database!');
+    console.log(process.env.MONGO_ATLAS_PW);
   })
   .catch(() => {
     console.log('Connection failed!');
