@@ -6,8 +6,10 @@ module.exports = (req, res, next) => {
     const decodedToken = jwt.verify(token, "secret_this_should_be_longer");
     req.userData = { email: decodedToken.email, userId: decodedToken.userId};
     jwt.verify(token, "secret_this_should_be_longer");
+    console.log("we succeeded here");
     next();
   } catch (error) {
+    console.log("we failed here");
     res.status(401).json({ message: "Auth failed!" });
   }
 };

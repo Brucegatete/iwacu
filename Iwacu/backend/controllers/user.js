@@ -30,19 +30,23 @@ exports.userLogin = (req, res, next) => {
   User.findOne({ email: req.body.email })
     .then(user => {
       if (!user) {
+        console.log("we couldn't find user");
         return res.status(401).json({
           message: "Auth failed"
         });
       }
+      console.log("we found the user");
       fetchedUser = user;
       return bcrypt.compare(req.body.password, user.password);
     })
     .then(result => {
       if (!result) {
+        console.log("no result");
         return res.status(401).json({
           message: "Auth failed"
         });
       }
+      console.log(" result");
       const token = jwt.sign(
         { email: fetchedUser.email, userId: fetchedUser._id },
         "secret_this_should_be_longer",
@@ -55,6 +59,7 @@ exports.userLogin = (req, res, next) => {
       });
     })
     .catch(err => {
+      console.log("we ran into an error!");
       return res.status(401).json({
         message: "Auth failed"
       });
