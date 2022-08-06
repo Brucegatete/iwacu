@@ -10,6 +10,10 @@ import { PostCreateComponent } from "./post-create/post-create.component";
 import { PostListComponent } from "./post-list/post-list.component";
 import { FormsModule } from "@angular/forms";
 import { SearchComponent } from "./search/search.component";
+import {MatFormFieldModule, MAT_FORM_FIELD_DEFAULT_OPTIONS} from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+
+
 
 @NgModule({
   declarations: [PostCreateComponent, PostListComponent, SearchComponent],
@@ -21,8 +25,13 @@ import { SearchComponent } from "./search/search.component";
     BrowserModule,
     BrowserAnimationsModule,
     FlexLayoutModule,
-    FormsModule
+    FormsModule,
+    MatFormFieldModule,
+    MatSelectModule
 
+  ],
+  providers: [
+    {provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: {appearance: 'fill'}}
   ]
 })
 

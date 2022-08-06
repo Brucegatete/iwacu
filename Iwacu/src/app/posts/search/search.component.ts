@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
+import { PostsService } from "src/app/services/post.service";
 
 @Component({
   selector : 'app-search',
@@ -9,11 +10,9 @@ import { ActivatedRoute, Router } from "@angular/router";
 
 export class SearchComponent implements OnInit {
 
-  searchTerm: String = "";
+  public searchTerm: String = "";
 
-  constructor (private route: ActivatedRoute, private router: Router) {}
-
-  ngOnInit(): void {
+  constructor (private route: ActivatedRoute, private router: Router, private postService: PostsService) {
     this.route.params.subscribe(params => {
       if(params.searchTerm){
         this.searchTerm = params.searchTerm;
@@ -21,6 +20,10 @@ export class SearchComponent implements OnInit {
         this.searchTerm = "";
       }
     });
+    this.postService.getSearchTerm(this.searchTerm);
+  }
+
+  ngOnInit(): void {
   }
 
   search(): void {

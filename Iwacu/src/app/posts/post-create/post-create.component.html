@@ -11,6 +11,14 @@
         placeholder="Post Title">
       <mat-error *ngIf="form.get('title').invalid">Please enter a post title.</mat-error>
     </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Select Category</mat-label>
+      <mat-select name="category" formControlName="category">
+        <mat-option value="Shoes">Shoes</mat-option>
+        <mat-option value="Clothes">Clothes</mat-option>
+        <mat-error *ngIf="form.get('category').invalid">Please select category.</mat-error>
+      </mat-select>
+    </mat-form-field>
     <div>
       <button mat-stroked-button type="button" (click)="filePicker.click()"> Pick Image</button>
       <input type="file" #filePicker (change)="onImagePicked($event)">

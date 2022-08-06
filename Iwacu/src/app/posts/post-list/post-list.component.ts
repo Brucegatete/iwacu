@@ -6,7 +6,6 @@ import { ActivatedRoute } from "@angular/router";
 
 import { Post } from "../../models/post.model";
 import { PostsService } from "../../services/post.service";
-
 @Component({
   selector: "app-post-list",
   templateUrl: "./post-list.component.html",
@@ -21,26 +20,33 @@ export class PostListComponent implements OnInit, OnDestroy {
   posts: Post[] = [];
   isLoading = false;
   totalPosts = 0;
-  postsPerPage = 10;
+  postsPerPage = 5;
   currentPage = 1;
   pageSizeOptions = [1, 2, 5, 10];
   userId: string;
+  public searchTerm = "";
   userIsAuthenticated = false;
   private postsSub: Subscription;
   private authStatusSub: Subscription;
 
-  constructor(public postsService: PostsService, private authService: AuthService, private route:ActivatedRoute) {}
+  constructor(public postsService: PostsService, private authService: AuthService, private route:ActivatedRoute) {
+    this.postsService.getSearchTerm$.subscribe((searchTerm) => {
+      this.searchTerm = searchTerm;
+    })
+  }
 
   ngOnInit() {
+    console.log(this.searchTerm + "this is the search term");
     this.isLoading = true;
     this.userId = this.authService.getUserId();
-    this.postsService.getPosts(this.postsPerPage, this.currentPage);
+    this.postsService.getPosts(this.postsPerPage, this.currentPage, this.searchTerm);
     this.postsSub = this.postsService
       .getPostUpdateListener()
       .subscribe((postData: {posts: Post[], postCount: number}) => {
         this.isLoading = false;
         console.log(postData)
         this.route.params.subscribe(params => {
+          // need to grab posts from the backend
           if(params.searchTerm){
             this.posts = postData.posts.filter(post => post.title.toLowerCase().includes(params.searchTerm.toLowerCase()))
             this.totalPosts = Object.keys(this.posts).length;
@@ -64,13 +70,13 @@ export class PostListComponent implements OnInit, OnDestroy {
     this.isLoading = true;
     this.currentPage = pageData.pageIndex + 1;
     this.postsPerPage = pageData.pageSize;
-    this.postsService.getPosts(this.postsPerPage, this.currentPage);
+    this.postsService.getPosts(this.postsPerPage, this.currentPage, this.searchTerm);
   }
 
   onDelete(postId: string) {
     this.isLoading = true;
     this.postsService.deletePost(postId).subscribe(() => {
-      this.postsService.getPosts(this.postsPerPage, this.currentPage);
+      this.postsService.getPosts(this.postsPerPage, this.currentPage, this.searchTerm);
     });
   }
 

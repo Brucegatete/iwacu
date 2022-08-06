@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { Subject } from "rxjs";
+import { Observable, Subject } from "rxjs";
 import { map } from "rxjs/operators";
 import { Router } from "@angular/router";
 
@@ -13,11 +13,20 @@ const BACKEND_URL = environment.apiUrl + "/posts/"
 export class PostsService {
   private posts: Post[] = [];
   private postsUpdated = new Subject<{ posts: Post[]; postCount: number }>();
+  getSearchTerm$: Observable<any>;
+  private getSearchTermSubject = new Subject<any>();
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient, private router: Router) {
+    this.getSearchTerm$ = this.getSearchTermSubject.asObservable();
+  }
 
-  getPosts(postsPerPage: number, currentPage: number) {
-    const queryParams = `?pagesize=${postsPerPage}&page=${currentPage}`;
+  getSearchTerm(searchTerm){
+    this.getSearchTermSubject.next(searchTerm);
+  }
+
+  getPosts(postsPerPage: number, currentPage: number, searchTerm: string) {
+    const queryParams = `?pagesize=${postsPerPage}&page=${currentPage}&searchTerm=${searchTerm}`;
+    console.log(BACKEND_URL + queryParams);
     this.http
       .get<{ message: string; posts: any; maxPosts: number }>(
         BACKEND_URL + queryParams
@@ -31,6 +40,7 @@ export class PostsService {
                 content: post.content,
                 id: post._id,
                 imagePath: post.imagePath,
+                category: post.category,
                 creator: post.creator
               };
             }),
@@ -58,15 +68,17 @@ export class PostsService {
       title: string;
       content: string;
       imagePath: string;
+      category: string;
       creator: string
     }>(BACKEND_URL + id);
   }
 
-  addPost(title: string, content: string, image: File) {
+  addPost(title: string, content: string, category: string, image: File) {
     const postData = new FormData();
     postData.append("title", title);
     postData.append("content", content);
     postData.append("image", image, title);
+    postData.append("category", category);
     this.http
       .post<{ message: string; post: Post }>(
         BACKEND_URL,
@@ -77,19 +89,21 @@ export class PostsService {
       });
   }
 
-  updatePost(id: string, title: string, content: string, image: File | string) {
+  updatePost(id: string, title: string, content: string, category: string, image: File | string) {
     let postData: Post | FormData;
     if (typeof image === "object") {
       postData = new FormData();
       postData.append("id", id);
       postData.append("title", title);
       postData.append("content", content);
+      postData.append("category", category);
       postData.append("image", image, title);
     } else {
       postData = {
         id: id,
         title: title,
         content: content,
+        category: category,
         imagePath: image,
         creator: null
       };
