@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from "@angular/core";
 import { PageEvent } from "@angular/material/paginator";
 import { Subscription } from "rxjs";
 import { AuthService } from "src/app/services/auth.service";
+import { ActivatedRoute } from "@angular/router";
 
 import { Post } from "../../models/post.model";
 import { PostsService } from "../../services/post.service";
@@ -20,7 +21,7 @@ export class PostListComponent implements OnInit, OnDestroy {
   posts: Post[] = [];
   isLoading = false;
   totalPosts = 0;
-  postsPerPage = 7;
+  postsPerPage = 10;
   currentPage = 1;
   pageSizeOptions = [1, 2, 5, 10];
   userId: string;
@@ -28,7 +29,7 @@ export class PostListComponent implements OnInit, OnDestroy {
   private postsSub: Subscription;
   private authStatusSub: Subscription;
 
-  constructor(public postsService: PostsService, private authService: AuthService) {}
+  constructor(public postsService: PostsService, private authService: AuthService, private route:ActivatedRoute) {}
 
   ngOnInit() {
     this.isLoading = true;
@@ -38,8 +39,17 @@ export class PostListComponent implements OnInit, OnDestroy {
       .getPostUpdateListener()
       .subscribe((postData: {posts: Post[], postCount: number}) => {
         this.isLoading = false;
-        this.totalPosts = postData.postCount;
-        this.posts = postData.posts;
+        console.log(postData)
+        this.route.params.subscribe(params => {
+          if(params.searchTerm){
+            this.posts = postData.posts.filter(post => post.title.toLowerCase().includes(params.searchTerm.toLowerCase()))
+            this.totalPosts = Object.keys(this.posts).length;
+          } else {
+            this.totalPosts = postData.postCount;
+            this.posts = postData.posts;
+          }
+        });
+
       });
     this.userIsAuthenticated = this.authService.getIsAuth();
     this.authStatusSub = this.authService
