@@ -8,8 +8,8 @@ import { RouterModule } from "@angular/router";
 import { AngularMaterialModule } from "../angular-material.module";
 import { PostCreateComponent } from "./post-create/post-create.component";
 import { PostListComponent } from "./post-list/post-list.component";
-import { SearchComponent } from "../search/search.component";
 import { FormsModule } from "@angular/forms";
+import { SearchComponent } from "./search/search.component";
 
 @NgModule({
   declarations: [PostCreateComponent, PostListComponent, SearchComponent],

@@ -17,6 +17,8 @@ export class SearchComponent implements OnInit {
     this.route.params.subscribe(params => {
       if(params.searchTerm){
         this.searchTerm = params.searchTerm;
+      } else {
+        this.searchTerm = "";
       }
     });
   }
@@ -24,6 +26,9 @@ export class SearchComponent implements OnInit {
   search(): void {
     if(this.searchTerm){
       this.router.navigateByUrl('/search/' + this.searchTerm)
+    }else {
+      this.router.navigate(['/'])
     }
+
   }
 }
