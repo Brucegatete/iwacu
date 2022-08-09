@@ -4,7 +4,6 @@ import { HttpClient } from "@angular/common/http";
 import { AuthData } from "../models/auth-data.model";
 import { Subject } from "rxjs";
 import { Router } from "@angular/router";
-import { THIS_EXPR } from "@angular/compiler/src/output/output_ast";
 import { environment } from "src/environments/environment";
 
 const BACKEND_URL = environment.apiUrl + "/user/";
@@ -16,8 +15,13 @@ export class AuthService {
   private authStatusListener = new Subject<boolean>();
   private tokenTimer: any;
   private userId: string;
+  private userEmail: string;
 
   constructor(private http: HttpClient, private router: Router) {}
+
+  getUserEmail(){
+    return this.userEmail;
+  }
 
   getToken() {
     return this.token;
@@ -38,10 +42,11 @@ export class AuthService {
     }, duration * 1000)
   }
 
-  private saveAuthData(token: string, expirationDate: Date, userId: string){
+  private saveAuthData(token: string, expirationDate: Date, userId: string, userEmail: string){
     localStorage.setItem("token", token);
     localStorage.setItem("expiration", expirationDate.toISOString());
     localStorage.setItem("userId", userId);
+    localStorage.setItem("userEmail", this.userEmail);
   }
 
   //automatic signin
@@ -108,6 +113,7 @@ export class AuthService {
       .subscribe(response => {
         const token = response.token;
         this.token = token;
+        this.userEmail = authData.email;
         if(token){
           const expiresInDuration = response.expiresIn;
           this.setAuthTimer(expiresInDuration);
@@ -117,7 +123,7 @@ export class AuthService {
           const now = new Date();
           const expirationDate = new Date(now.getTime() + expiresInDuration * 1000);
           console.log(expirationDate);
-          this.saveAuthData(token, expirationDate, this.userId);
+          this.saveAuthData(token, expirationDate, this.userId, this.userEmail);
           this.router.navigate(["/"]);
         }
       }, error => {
