@@ -14,6 +14,7 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { HeaderComponent } from './header/header.component';
 import { ErrorComponent } from './error/error.component';
+import { ProfileComponent } from './profile/profile.component';
 
 import { AuthInterceptor } from './interceptors/auth-interceptor'
 import { ErrorInterceptor } from './interceptors/error-interceptor';
@@ -28,7 +29,8 @@ import { AuthModule } from './auth/auth.module';
     AppComponent,
     HomeComponent,
     HeaderComponent,
-    ErrorComponent
+    ErrorComponent,
+    ProfileComponent
   ],
   imports: [
     AppRoutingModule,
