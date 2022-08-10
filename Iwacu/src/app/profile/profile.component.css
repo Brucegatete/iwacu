@@ -1,0 +1,13 @@
+.mat-form-field + .mat-form-field {
+  margin-left: 8px;
+}
+
+
+.profile-card {
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+.my-posts{
+  margin-left: 1em;
+}

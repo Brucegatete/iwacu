@@ -61,6 +61,7 @@ export class AuthService {
       this.token = authInformation.token;
       this.isAuthenticated = true;
       this.userId = authInformation.userId;
+      this.userEmail = authInformation.userEmail;
       this.setAuthTimer(expiresIn / 1000);
       this.authStatusListener.next(true);
     }
@@ -75,7 +76,8 @@ export class AuthService {
   getAuthData(){
     const token = localStorage.getItem("token");
     const expirationDate = localStorage.getItem("expiration");
-    const userId = localStorage.getItem("userId")
+    const userId = localStorage.getItem("userId");
+    const userEmail = localStorage.getItem("userEmail");
     if(!token || !expirationDate){
       return;
     }
@@ -83,7 +85,8 @@ export class AuthService {
     return {
       token: token,
       expirationDate: new Date(expirationDate),
-      userId: userId
+      userId: userId,
+      userEmail: userEmail
     }
   }
 
@@ -114,6 +117,7 @@ export class AuthService {
         const token = response.token;
         this.token = token;
         this.userEmail = authData.email;
+        console.log("we have an email " + this.userEmail);
         if(token){
           const expiresInDuration = response.expiresIn;
           this.setAuthTimer(expiresInDuration);
