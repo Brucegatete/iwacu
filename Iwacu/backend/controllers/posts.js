@@ -63,7 +63,6 @@ exports.getPosts = (req, res, next) => {
   const regex = new RegExp(searchTerm, 'i');
   const postQuery = Post.find(
     { title: { $regex : regex} });
-  console.log(postQuery);
   let fetchedPosts;
   if (pageSize && currentPage) {
     postQuery.skip(pageSize * (currentPage - 1)).limit(pageSize);
@@ -71,7 +70,6 @@ exports.getPosts = (req, res, next) => {
   postQuery
     .then(documents => {
       fetchedPosts = documents;
-      console.log(fetchedPosts);
       return Post.count();
     })
     .then(count => {
@@ -86,10 +84,6 @@ exports.getPosts = (req, res, next) => {
         message: "Fetching posts failed!"
       });
     });
-
-    // if (pageSize && currentPage) {
-    //   postQuery.skip(pageSize * (currentPage - 1)).limit(pageSize);
-    // }
 };
 
 
@@ -119,7 +113,6 @@ exports.deletePost = (req, res, next) => {
       }
     })
     .catch(error => {
-      console.log("caught an error");
       res.status(500).json({
         message: "Deleting posts failed!"
       });
