@@ -29,10 +29,12 @@ export class ProfileComponent implements OnInit{
   ngOnInit(): void {
     this.userEmail = this.authService.getUserEmail();
     this.userId = this.authService.getUserId();
-    this.postsService.getPosts(this.postsPerPage, this.currentPage, "");
+    // limit such that we are not hard coding the limit
+    this.postsService.getPosts(100, 1, "");
     this.postsSub = this.postsService
       .getPostUpdateListener()
       .subscribe((postData: {posts: Post[], postCount: number}) => {
+        console.log("this is the postData");
         console.log(postData)
         this.route.params.subscribe(params => {
           // need to grab posts from the backend
@@ -44,7 +46,8 @@ export class ProfileComponent implements OnInit{
             this.posts = postData.posts;
           }
           // filter for only all the posts that the user has created
-          // this.posts = this.posts.filter(post => post.creator)
+          console.log(this.posts[0].creator);
+          this.posts = this.posts.filter(post => post.creator == this.userId)
         });
 
       });
