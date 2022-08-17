@@ -7,6 +7,9 @@ import { AngularMaterialModule } from '../angular-material.module';
 import { AuthRoutingModule } from './auth-routing.module';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+
 
 
 @NgModule({
@@ -17,7 +20,9 @@ import { SignupComponent } from './signup/signup.component';
     RouterModule,
     FormsModule,
     BrowserModule,
-    AuthRoutingModule
+    AuthRoutingModule,
+    MatFormFieldModule,
+    MatSelectModule
 
   ]
 

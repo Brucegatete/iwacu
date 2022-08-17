@@ -16,6 +16,7 @@ export class AuthService {
   private tokenTimer: any;
   private userId: string;
   private userEmail: string;
+  private userProfileType: string;
 
   constructor(private http: HttpClient, private router: Router) {}
 
@@ -96,8 +97,8 @@ export class AuthService {
 
 
   //sign up
-  createUser(email: string, password: string) {
-    const authData: AuthData = { email: email, password: password };
+  createUser(email: string, password: string, userProfileType: string) {
+    const authData: AuthData = { email: email, password: password, userProfileType: userProfileType };
     this.http
       .post(BACKEND_URL + "signup", authData)
       .subscribe(() => {
@@ -111,7 +112,7 @@ export class AuthService {
 
   //login
   login(email: string, password: string) {
-    const authData: AuthData = {email: email, password: password};
+    const authData: AuthData = {email: email, password: password, userProfileType: this.userProfileType};
     this.http.post<{token: string; expiresIn: number; userId: string} >("http://localhost:3000/api/user/login", authData)
       .subscribe(response => {
         const token = response.token;
