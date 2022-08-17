@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { NgForm } from "@angular/forms";
 import { Subscription } from "rxjs";
-import { retry } from "rxjs/operators";
 import { AuthService } from "src/app/services/auth.service";
 
 @Component({
@@ -11,6 +10,7 @@ import { AuthService } from "src/app/services/auth.service";
 export class SignupComponent implements OnInit, OnDestroy {
   isLoading = false;
   private authStatusSub: Subscription;
+  private userProfileType: string;
 
   constructor(public authService: AuthService) {}
 
@@ -22,12 +22,17 @@ export class SignupComponent implements OnInit, OnDestroy {
     );
   }
 
+  onSelectionChange(value){
+    this.userProfileType = value;
+  }
+
   onSignup(form: NgForm) {
     if (!form.valid) {
       return;
     }
     this.isLoading = true;
-    this.authService.createUser(form.value.email, form.value.password, form.value.userProfileType);
+    console.log("this is user profile type " + form.value.userProfileType);
+    this.authService.createUser(form.value.email, form.value.password, this.userProfileType);
   }
 
   ngOnDestroy() {

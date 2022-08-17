@@ -11,7 +11,7 @@
     </mat-form-field>
     <mat-form-field appearance="fill">
       <mat-label>User Type</mat-label>
-      <mat-select name="userProfileType">
+      <mat-select name="action" (selectionChange)="onSelectionChange($event.value)">
         <mat-option value="seller">Seller</mat-option>
         <mat-option value="buyer">Buyer</mat-option>
       </mat-select>
