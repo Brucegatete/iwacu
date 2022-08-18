@@ -115,8 +115,8 @@ export class AuthService {
 
 
   //login
-  login(email: string, password: string) {
-    const authData: AuthData = {email: email, password: password, userProfileType: this.userProfileType};
+  login(email: string, password: string, userProfileType: string) {
+    const authData: AuthData = {email: email, password: password, userProfileType: userProfileType};
     this.http.post<{token: string; expiresIn: number; userId: string} >("http://localhost:3000/api/user/login", authData)
       .subscribe(response => {
         const token = response.token;
