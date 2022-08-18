@@ -9,7 +9,8 @@ import { AuthService } from "src/app/services/auth.service";
 })
 export class LoginComponent implements OnInit, OnDestroy{
   isLoading = false;
-  private authStatusSub: Subscription
+  private authStatusSub: Subscription;
+  private userProfileType: string;
 
 
   constructor(public authService: AuthService) {}
@@ -22,12 +23,17 @@ export class LoginComponent implements OnInit, OnDestroy{
     )
   }
 
+  onSelectionChange(value){
+    this.userProfileType = value;
+  }
+
+
 
   onLogin(form: NgForm) {
     if(form.invalid){
       return;
     }
-    this.authService.login(form.value.email, form.value.password);
+    this.authService.login(form.value.email, form.value.password, this.userProfileType);
   }
 
   ngOnDestroy(): void {

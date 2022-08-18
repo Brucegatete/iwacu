@@ -37,6 +37,11 @@ exports.userLogin = (req, res, next) => {
         });
       }
       fetchedUser = user;
+      if(user.userProfileType != req.body.userProfileType){
+        return res.status(401).json({
+          message: "user profile is not matching"
+        })
+      }
       return bcrypt.compare(req.body.password, user.password);
     })
     .then(result => {

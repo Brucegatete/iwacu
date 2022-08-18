@@ -31,7 +31,7 @@ export class SignupComponent implements OnInit, OnDestroy {
       return;
     }
     this.isLoading = true;
-    console.log("this is user profile type " + form.value.userProfileType);
+    console.log("this is user profile type " + this.userProfileType);
     this.authService.createUser(form.value.email, form.value.password, this.userProfileType);
   }
 
