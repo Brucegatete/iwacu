@@ -28,6 +28,7 @@ export class PostListComponent implements OnInit, OnDestroy {
   userIsAuthenticated = false;
   private postsSub: Subscription;
   private authStatusSub: Subscription;
+  isSeller: boolean
 
   constructor(public postsService: PostsService, private authService: AuthService, private route:ActivatedRoute) {
     this.postsService.getSearchTerm$.subscribe((searchTerm) => {
@@ -36,10 +37,10 @@ export class PostListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    console.log(this.searchTerm + "this is the search term");
     this.isLoading = true;
     this.userId = this.authService.getUserId();
     this.postsService.getPosts(this.postsPerPage, this.currentPage, this.searchTerm);
+    this.isSeller = this.authService.getAuthData().userProfileType == "seller";
     this.postsSub = this.postsService
       .getPostUpdateListener()
       .subscribe((postData: {posts: Post[], postCount: number}) => {

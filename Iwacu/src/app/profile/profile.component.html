@@ -2,14 +2,16 @@
   <mat-card class="card">
     <mat-card-header>
       <div mat-card-avatar>
-
       </div>
       <mat-card-title> {{ userEmail}} </mat-card-title>
       <mat-card-subtitle> this is a user's email</mat-card-subtitle>
     </mat-card-header>
+    <mat-card-content>
+      User Type: {{ userProfileType }}
+    </mat-card-content>
   </mat-card>
 </div>
-<div class="my-posts">My Posts</div>
+<div class="my-posts">My Items</div>
 <div class="listings">
   <div fxLayout="row wrap"  fxLayoutGap="16px grid" *ngIf="posts.length > 0">
     <div fxFlex="25%" fxFlex.xs="100%" fxFlex.sm="33%" *ngFor="let post of posts">

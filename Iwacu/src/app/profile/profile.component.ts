@@ -23,12 +23,14 @@ export class ProfileComponent implements OnInit{
   currentPage = 1;
   pageSizeOptions = [1, 2, 5, 10];
   private postsSub: Subscription;
+  userProfileType: string;
   totalPosts = 0;
 
 
   ngOnInit(): void {
     this.userEmail = this.authService.getUserEmail();
     this.userId = this.authService.getUserId();
+    this.userProfileType= this.authService.getAuthData().userProfileType;
     // limit such that we are not hard coding the limit
     this.postsService.getPosts(100, 1, "");
     this.postsSub = this.postsService
