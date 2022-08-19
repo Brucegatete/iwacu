@@ -14,7 +14,7 @@ const routes: Routes = [
   {path : "auth", loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)},
   {path : 'search/:searchTerm', component: PostListComponent},
   {path: 'profile', component: ProfileComponent},
-  {path: 'post-detail', component: PostDetailsComponent}
+  {path: 'post-detail/:postId', component: PostDetailsComponent}
 
 ];
 

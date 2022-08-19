@@ -29,6 +29,7 @@ export class PostListComponent implements OnInit, OnDestroy {
   private postsSub: Subscription;
   private authStatusSub: Subscription;
   isSeller: boolean
+  selectedPostId: string;
 
   constructor(public postsService: PostsService, private authService: AuthService, private route:ActivatedRoute) {
     this.postsService.getSearchTerm$.subscribe((searchTerm) => {
