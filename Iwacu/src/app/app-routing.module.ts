@@ -5,6 +5,7 @@ import { PostListComponent } from './posts/post-list/post-list.component';
 import { AuthGuard } from './guards/auth.guard';
 import { ProfileComponent } from './profile/profile.component';
 import { PostDetailsComponent } from './posts/post-details/post-details.component';
+import { MyCartComponent } from './my-cart/my-cart.component';
 
 
 const routes: Routes = [
@@ -14,7 +15,8 @@ const routes: Routes = [
   {path : "auth", loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)},
   {path : 'search/:searchTerm', component: PostListComponent},
   {path: 'profile', component: ProfileComponent},
-  {path: 'post-detail/:postId', component: PostDetailsComponent}
+  {path: 'post-detail/:postId', component: PostDetailsComponent},
+  {path: 'my-cart', component: MyCartComponent}
 
 ];
 

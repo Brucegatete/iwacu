@@ -103,6 +103,34 @@ exports.getPost = (req, res, next) => {
     });
 };
 
+exports.getUserCartItems = (req, res, next) => {
+  creatorId = req.params.creator;
+  const postQuery = Post.find(
+    { creator: creatorId });
+  let fetchedPosts;
+  // if (pageSize && currentPage) {
+  //   postQuery.skip(pageSize * (currentPage - 1)).limit(pageSize);
+  // }
+  postQuery
+    .then(documents => {
+      fetchedPosts = documents;
+      return Post.count();
+    })
+    .then(count => {
+      res.status(200).json({
+        message: "Posts fetched successfully!",
+        posts: fetchedPosts,
+        maxPosts: count
+      });
+    })
+    .catch(error => {
+      res.status(500).json({
+        message: "Fetching posts failed!"
+      });
+    });
+};
+
+
 exports.deletePost = (req, res, next) => {
   Post.deleteOne({ _id: req.params.id, creator: req.userData.userId })
     .then(result => {
