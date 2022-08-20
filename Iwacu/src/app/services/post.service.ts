@@ -62,6 +62,10 @@ export class PostsService {
     return this.postsUpdated.asObservable();
   }
 
+  getSelectedPostId(){
+
+  }
+
   getPost(id: string) {
     return this.http.get<{
       _id: string;
