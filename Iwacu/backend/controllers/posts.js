@@ -90,7 +90,7 @@ exports.getPosts = (req, res, next) => {
 exports.getPost = (req, res, next) => {
   Post.findById(req.params.id)
     .then(post => {
-      if (post) {s
+      if (post) {
         res.status(200).json(post);
       } else {
         res.status(404).json({ message: "Post not found!" });
