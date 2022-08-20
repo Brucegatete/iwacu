@@ -12,6 +12,8 @@ const BACKEND_URL = environment.apiUrl + "/posts/"
 @Injectable({ providedIn: "root" })
 export class PostsService {
   private posts: Post[] = [];
+  private userPosts: Post[] = [];
+  private userPostUpdated = new Subject<{userPosts: Post[]}>();
   private postsUpdated = new Subject<{ posts: Post[]; postCount: number }>();
   getSearchTerm$: Observable<any>;
   private getSearchTermSubject = new Subject<any>();
@@ -26,7 +28,6 @@ export class PostsService {
 
   getPosts(postsPerPage: number, currentPage: number, searchTerm: string) {
     const queryParams = `?pagesize=${postsPerPage}&page=${currentPage}&searchTerm=${searchTerm}`;
-    console.log(BACKEND_URL + queryParams);
     this.http
       .get<{ message: string; posts: any; maxPosts: number }>(
         BACKEND_URL + queryParams
@@ -62,8 +63,41 @@ export class PostsService {
     return this.postsUpdated.asObservable();
   }
 
-  getSelectedPostId(){
+  getUserPostUpdatedListener() {
+    return this.userPostUpdated.asObservable();
+  }
 
+
+  // TODO - Optimize here, we don't want to load all posts before we narrow down to creator posts
+  getUserCartItems(creatorId: string){
+    this.http
+      .get<{ message: string; posts: any; maxPosts: number }>(
+        BACKEND_URL + creatorId
+      )
+      .pipe(
+        map(postData => {
+          return {
+            posts: postData.posts.map(post => {
+              return {
+                title: post.title,
+                content: post.content,
+                id: post._id,
+                imagePath: post.imagePath,
+                category: post.category,
+                creator: post.creator
+              };
+            }),
+            maxPosts: postData.maxPosts
+          };
+        })
+      )
+      .subscribe(transformedPostData => {
+        console.log(transformedPostData)
+        this.userPosts = transformedPostData.posts;
+        this.userPostUpdated.next({
+          userPosts: [...this.posts]
+        });
+      });
   }
 
   getPost(id: string) {
