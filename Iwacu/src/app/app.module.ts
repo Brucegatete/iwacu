@@ -5,6 +5,8 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { AppRoutingModule } from './app-routing.module';
 import { FormsModule } from '@angular/forms';
+import { MatMenuModule } from '@angular/material/menu';
+
 
 
 
@@ -42,7 +44,8 @@ import { AuthModule } from './auth/auth.module';
     AngularMaterialModule,
     PostsModule,
     AuthModule,
-    FormsModule
+    FormsModule,
+    MatMenuModule
 
   ],
   providers: [
