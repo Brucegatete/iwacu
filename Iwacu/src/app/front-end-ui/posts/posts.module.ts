@@ -5,7 +5,7 @@ import { ReactiveFormsModule } from "@angular/forms";
 import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { RouterModule } from "@angular/router";
-import { AngularMaterialModule } from "../angular-material.module";
+import { AngularMaterialModule } from "../../angular-material.module";
 import { FormsModule } from "@angular/forms";
 import {MatFormFieldModule, MAT_FORM_FIELD_DEFAULT_OPTIONS} from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';

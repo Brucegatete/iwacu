@@ -20,7 +20,6 @@ export class PostDetailsComponent implements OnInit{
   ngOnInit(): void {
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
       if (paramMap.has("postId")) {
-        console.log(paramMap.get("postId"))
         this.postId = paramMap.get("postId");
         this.postsService.getPost(this.postId).subscribe(postData => {
           console.log("this is postdata")

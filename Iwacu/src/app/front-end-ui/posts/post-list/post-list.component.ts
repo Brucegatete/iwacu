@@ -4,8 +4,8 @@ import { Subscription } from "rxjs";
 import { AuthService } from "src/app/services/auth.service";
 import { ActivatedRoute } from "@angular/router";
 
-import { Post } from "../../models/post.model";
-import { PostsService } from "../../services/post.service";
+import { Post } from "../../../models/post.model";
+import { PostsService } from "../../../services/post.service";
 @Component({
   selector: "app-post-list",
   templateUrl: "./post-list.component.html",

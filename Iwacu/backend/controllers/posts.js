@@ -70,8 +70,6 @@ exports.getPosts = (req, res, next) => {
   postQuery
     .then(documents => {
       fetchedPosts = documents;
-      console.log("we succeeded")
-      console.log(fetchedPosts);
       return Post.count();
     })
     .then(count => {
