@@ -2,9 +2,9 @@ import { ThrowStmt } from '@angular/compiler/src/output/output_ast';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import { Post } from '../../models/post.model';
+import { Post } from '../../../models/post.model';
 import { mimeType } from './mime-type.validator';
-import { PostsService } from '../../services/post.service';
+import { PostsService } from '../../../services/post.service';
 
 @Component({
   selector: 'app-post-create',
