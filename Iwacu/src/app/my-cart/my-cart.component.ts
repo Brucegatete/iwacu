@@ -22,14 +22,21 @@ export class MyCartComponent implements OnInit{
 
   ngOnInit(): void {
     this.creatorId = this.authService.getUserId();
-    this.postsService.getUserCartItems(this.creatorId);
     console.log(this.creatorId);
+    // TODO -- OPTIMIZE THIS, THIS IS HIGHLY INEFFICIENT AND UNSCALLABLE IN CASE YOU HAVE TO PARSE MORE THAN 100 POSTS
+    this.postsService.getPosts(100, 1, "");
     this.itemSub = this.postsService
-      .getUserPostUpdatedListener()
-      .subscribe((userPostData: {userPosts: Post[]}) => {
+      .getPostUpdateListener()
+      .subscribe((postData: {posts: Post[], postCount: number}) => {
+        console.log("this is the postData");
         this.route.params.subscribe(params => {
-            this.userItems = userPostData.userPosts;
-          // }
+          // need to grab posts from the backend
+          this.userItems = postData.posts;
+          console.log(postData)
+
+
+          // filter for only all the posts that the user has created
+          this.userItems = this.userItems.filter(userItem => userItem.creator == this.creatorId)
         });
 
       });

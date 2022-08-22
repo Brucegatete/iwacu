@@ -95,7 +95,7 @@ export class PostsService {
         console.log(transformedPostData)
         this.userPosts = transformedPostData.posts;
         this.userPostUpdated.next({
-          userPosts: [...this.posts]
+          userPosts: [...this.userPosts]
         });
       });
   }
