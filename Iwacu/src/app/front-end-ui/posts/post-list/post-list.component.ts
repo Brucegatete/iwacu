@@ -6,8 +6,8 @@ import { ActivatedRoute } from "@angular/router";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { mimeType } from "../post-create/mime-type.validator";
 
-import { Post } from "../../models/post.model";
-import { PostsService } from "../../services/post.service";
+import { Post } from "../../../models/post.model";
+import { PostsService } from "../../../services/post.service";
 @Component({
   selector: "app-post-list",
   templateUrl: "./post-list.component.html",

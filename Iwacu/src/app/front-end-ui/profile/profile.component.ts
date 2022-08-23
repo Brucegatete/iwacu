@@ -2,9 +2,9 @@ import { Component, OnInit } from "@angular/core";
 import { PageEvent } from "@angular/material/paginator";
 import { ActivatedRoute } from "@angular/router";
 import { Subscription } from "rxjs";
-import { Post } from "../models/post.model";
-import { AuthService } from "../services/auth.service";
-import { PostsService } from "../services/post.service";
+import { Post } from "../../models/post.model";
+import { AuthService } from "../../services/auth.service";
+import { PostsService } from "../../services/post.service";
 
 @Component({
   selector: "app-profile",

@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
-import { Post } from "../models/post.model";
-import { PostsService } from "../services/post.service";
-import { AuthService } from "../services/auth.service";
+import { Post } from "../../models/post.model";
+import { PostsService } from "../../services/post.service";
+import { AuthService } from "../../services/auth.service";
 import { ActivatedRoute } from "@angular/router";
 import { Subscription } from "rxjs";
 
