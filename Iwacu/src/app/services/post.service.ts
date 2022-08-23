@@ -127,6 +127,22 @@ export class PostsService {
       });
   }
 
+  addPostToCart(title: string, content: string, category: string, image: File) {
+    const postData = new FormData();
+    postData.append("title", title);
+    postData.append("content", content);
+    postData.append("image", image, title);
+    postData.append("category", category);
+    this.http
+      .post<{ message: string; post: Post }>(
+        BACKEND_URL + "/my-cart/",
+        postData
+      )
+      .subscribe(responseData => {
+        this.router.navigate(["/"]);
+      });
+  }
+
   updatePost(id: string, title: string, content: string, category: string, image: File | string) {
     let postData: Post | FormData;
     if (typeof image === "object") {

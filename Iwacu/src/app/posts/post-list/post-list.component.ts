@@ -3,6 +3,8 @@ import { PageEvent } from "@angular/material/paginator";
 import { Subscription } from "rxjs";
 import { AuthService } from "src/app/services/auth.service";
 import { ActivatedRoute } from "@angular/router";
+import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { mimeType } from "../post-create/mime-type.validator";
 
 import { Post } from "../../models/post.model";
 import { PostsService } from "../../services/post.service";
@@ -30,6 +32,9 @@ export class PostListComponent implements OnInit, OnDestroy {
   private authStatusSub: Subscription;
   isSeller: boolean
   selectedPostId: string;
+  form : FormGroup;
+  postIdForCart: string;
+  postForCart: Post;
 
   constructor(public postsService: PostsService, private authService: AuthService, private route:ActivatedRoute) {
     this.postsService.getSearchTerm$.subscribe((searchTerm) => {
@@ -66,6 +71,45 @@ export class PostListComponent implements OnInit, OnDestroy {
         this.userIsAuthenticated = isAuthicated;
         this.userId = this.authService.getUserId();
       })
+  }
+
+  //  not working now, need to go through router
+  onAddToCart(postId: string){
+    console.log("we are adding something here");
+    this.postIdForCart = postId;
+    this.form = new FormGroup({
+      title:  new FormControl(null, {validators: [Validators.required, Validators.minLength(3)]}),
+      content: new FormControl(null, {validators: [Validators.required]}),
+      category: new FormControl(null, {validators: [Validators.required]}),
+      image: new FormControl(null, {
+        validators: [Validators.required],
+        asyncValidators: [mimeType]
+      })
+    });
+      this.postsService.getPost(this.postIdForCart).subscribe(postData => {
+        console.log("we are here");
+        console.log(postData);
+        this.postForCart = {
+          id: postData._id,
+          title: postData.title,
+          content: postData.content,
+          imagePath: postData.imagePath,
+          category: "clothes",
+          creator: postData.creator
+        };
+        this.form.setValue({
+          title: this.postForCart.title,
+          content: this.postForCart.content,
+          category: this.postForCart.category,
+          image: this.postForCart.imagePath
+        });
+      });
+
+      // save post
+      console.log(this.form.value.title);
+      console.log(this.form.value.image);
+      this.postsService.addPostToCart(this.form.value.title, this.form.value.content, this.form.value.category, this.form.value.image);
+
   }
 
   onChangedPage(pageData: PageEvent) {

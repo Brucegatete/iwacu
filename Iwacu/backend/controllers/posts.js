@@ -27,6 +27,33 @@ exports.createPost = (req, res, next) => {
     });
 };
 
+exports.addPostToCart = (req, res, next) => {
+  const url = req.protocol + "://" + req.get("host");
+  const post = new Post({
+    title: req.body.title,
+    content: req.body.content,
+    category: req.body.category,
+    imagePath: url + "/images/" + req.file.filename,
+    creator: req.userData.userId
+  });
+  post
+    .save()
+    .then(addedPost => {
+      res.status(201).json({
+        message: "Post added successfully",
+        post: {
+          ...addedPost,
+          id: addedPost._id
+        }
+      });
+    })
+    .catch(error => {
+      res.status(500).json({
+        message: "Creating a post failed!"
+      });
+    });
+};
+
 exports.updatePost = (req, res, next) => {
   let imagePath = req.body.imagePath;
   if (req.file) {

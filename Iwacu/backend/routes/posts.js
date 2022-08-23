@@ -11,6 +11,8 @@ const router = express.Router();
 
 router.post("", checkAuth, extractFile, postController.createPost);
 
+router.post("/my-cart", checkAuth, extractFile, postController.addPostToCart);
+
 router.put("/:id",  checkAuth, extractFile, postController.updatePost);
 
 router.get("", postController.getPosts);
