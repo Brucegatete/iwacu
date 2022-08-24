@@ -17,6 +17,7 @@ import { HeaderComponent } from './front-end-ui/header/header.component';
 import { ErrorComponent } from './error/error.component';
 import { ProfileComponent } from './front-end-ui/profile/profile.component';
 import { MyCartComponent } from './front-end-ui/my-cart/my-cart.component';
+import { HomeComponent } from './front-end-ui/home/home.component';
 
 import { AuthInterceptor } from './interceptors/auth-interceptor'
 import { ErrorInterceptor } from './interceptors/error-interceptor';
@@ -32,7 +33,8 @@ import { AuthModule } from './front-end-ui/auth/auth.module';
     HeaderComponent,
     ErrorComponent,
     ProfileComponent,
-    MyCartComponent
+    MyCartComponent,
+    HomeComponent
   ],
   imports: [
     AppRoutingModule,
