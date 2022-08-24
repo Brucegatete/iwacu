@@ -75,8 +75,8 @@ export class PostListComponent implements OnInit, OnDestroy {
 
   //  not working now, need to go through router
   onAddToCart(postId: string){
-    console.log("we are adding something here");
     this.postIdForCart = postId;
+
     this.form = new FormGroup({
       title:  new FormControl(null, {validators: [Validators.required, Validators.minLength(3)]}),
       content: new FormControl(null, {validators: [Validators.required]}),
@@ -87,8 +87,7 @@ export class PostListComponent implements OnInit, OnDestroy {
       })
     });
       this.postsService.getPost(this.postIdForCart).subscribe(postData => {
-        console.log("we are here");
-        console.log(postData);
+
         this.postForCart = {
           id: postData._id,
           title: postData.title,
@@ -97,18 +96,25 @@ export class PostListComponent implements OnInit, OnDestroy {
           category: "clothes",
           creator: postData.creator
         };
+        console.log("this is the form output");
+
+
         this.form.setValue({
           title: this.postForCart.title,
           content: this.postForCart.content,
           category: this.postForCart.category,
           image: this.postForCart.imagePath
         });
+        console.log(this.form.value);
+        // find way to convert image url to path
+
+        this.postsService.addPostToCart(this.form.value.title, this.form.value.content, this.form.value.category, this.form.value.image);
       });
 
       // save post
       console.log(this.form.value.title);
       console.log(this.form.value.image);
-      this.postsService.addPostToCart(this.form.value.title, this.form.value.content, this.form.value.category, this.form.value.image);
+
 
   }
 
