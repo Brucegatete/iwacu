@@ -24,19 +24,19 @@ export class MyCartComponent implements OnInit{
     this.creatorId = this.authService.getUserId();
     console.log(this.creatorId);
     // TODO -- OPTIMIZE THIS, THIS IS HIGHLY INEFFICIENT AND UNSCALLABLE IN CASE YOU HAVE TO PARSE MORE THAN 100 POSTS
-    this.postsService.getPosts(100, 1, "");
+    this.postsService.getUserCartItems();
     this.itemSub = this.postsService
-      .getPostUpdateListener()
-      .subscribe((postData: {posts: Post[], postCount: number}) => {
-        console.log("this is the postData");
+      .getCartItemsUpdatedListener()
+      .subscribe((cartItemsData: {cartItems: Post[]}) => {
+        console.log("this is the cart items");
         this.route.params.subscribe(params => {
           // need to grab posts from the backend
-          this.userItems = postData.posts;
-          console.log(postData)
+          this.userItems = cartItemsData.cartItems;
+          console.log(cartItemsData)
 
 
           // filter for only all the posts that the user has created
-          this.userItems = this.userItems.filter(userItem => userItem.creator == this.creatorId)
+          // this.userItems = this.userItems.filter(userItem => userItem.creator == this.creatorId)
         });
 
       });

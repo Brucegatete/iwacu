@@ -14,6 +14,8 @@ export class PostsService {
   private posts: Post[] = [];
   private userPosts: Post[] = [];
   private userPostUpdated = new Subject<{userPosts: Post[]}>();
+  private cartItems: Post[] = [];
+  private cartItemsUpdated = new Subject<{cartItems: Post[]}>();
   private postsUpdated = new Subject<{ posts: Post[]; postCount: number }>();
   getSearchTerm$: Observable<any>;
   private getSearchTermSubject = new Subject<any>();
@@ -67,12 +69,16 @@ export class PostsService {
     return this.userPostUpdated.asObservable();
   }
 
+  getCartItemsUpdatedListener() {
+    return this.cartItemsUpdated.asObservable();
+  }
+
 
   // TODO - Optimize here, we don't want to load all posts before we narrow down to creator posts
-  getUserCartItems(creatorId: string){
+  getUserCartItems(){
     this.http
       .get<{ message: string; posts: any; maxPosts: number }>(
-        BACKEND_URL + creatorId
+        BACKEND_URL + 'my-cart'
       )
       .pipe(
         map(postData => {
@@ -93,9 +99,9 @@ export class PostsService {
       )
       .subscribe(transformedPostData => {
         console.log(transformedPostData)
-        this.userPosts = transformedPostData.posts;
-        this.userPostUpdated.next({
-          userPosts: [...this.userPosts]
+        this.cartItems = transformedPostData.posts;
+        this.cartItemsUpdated.next({
+          cartItems: [...this.cartItems]
         });
       });
   }

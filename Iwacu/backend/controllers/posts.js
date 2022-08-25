@@ -28,6 +28,7 @@ exports.createPost = (req, res, next) => {
 };
 
 exports.addPostToCart = (req, res, next) => {
+  console.log("we are hitting the backend to add items to cart");
   const url = req.protocol + "://" + req.get("host");
   const post = new Post({
     title: req.body.title,
