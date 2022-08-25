@@ -46,11 +46,14 @@ export class PostListComponent implements OnInit, OnDestroy {
     this.isLoading = true;
     this.userId = this.authService.getUserId();
     this.postsService.getPosts(this.postsPerPage, this.currentPage, this.searchTerm);
-    this.isSeller = this.authService.getAuthData().userProfileType == "seller";
+    if(this.userIsAuthenticated){
+      this.isSeller = this.authService.getAuthData().userProfileType == "seller";
+    }
     this.postsSub = this.postsService
       .getPostUpdateListener()
       .subscribe((postData: {posts: Post[], postCount: number}) => {
         this.isLoading = false;
+
         console.log(postData)
         this.route.params.subscribe(params => {
           // need to grab posts from the backend
