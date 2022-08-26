@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from "@angular/core";
 import { PageEvent } from "@angular/material/paginator";
 import { Subscription } from "rxjs";
 import { AuthService } from "src/app/services/auth.service";
+import { CartService } from "src/app/services/cart-service";
 import { ActivatedRoute } from "@angular/router";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { mimeType } from "../post-create/mime-type.validator";
@@ -36,8 +37,9 @@ export class PostListComponent implements OnInit, OnDestroy {
   form : FormGroup;
   postIdForCart: string;
   postForCart: Post;
+  itemsPostIds: String[] = [];
 
-  constructor(public postsService: PostsService, private authService: AuthService, private route:ActivatedRoute) {
+  constructor(public postsService: PostsService, private authService: AuthService, private route:ActivatedRoute, private cartService: CartService) {
     this.postsService.getSearchTerm$.subscribe((searchTerm) => {
       this.searchTerm = searchTerm;
     })
@@ -124,6 +126,10 @@ export class PostListComponent implements OnInit, OnDestroy {
       });
   }
 
+  onAddItemsToCart2(post: Post){
+    this.cartService.addToCart(post);
+    window.alert("you just added the product to the cart");
+  }
   onChangedPage(pageData: PageEvent) {
     this.isLoading = true;
     this.currentPage = pageData.pageIndex + 1;

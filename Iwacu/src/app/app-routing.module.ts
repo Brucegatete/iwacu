@@ -16,7 +16,8 @@ const routes: Routes = [
   {path : 'search/:searchTerm', component: PostListComponent},
   {path: 'profile', component: ProfileComponent},
   {path: 'post-detail/:postId', component: PostDetailsComponent},
-  {path: 'my-cart', component: MyCartComponent}
+  // {path: 'my-cart', component: MyCartComponent},
+  {path: 'cart', component: MyCartComponent}
 
 ];
 
