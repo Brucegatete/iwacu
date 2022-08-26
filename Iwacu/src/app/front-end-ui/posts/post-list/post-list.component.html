@@ -20,10 +20,12 @@
             <a mat-button color="primary" [routerLink]="['/edit', post.id]">EDIT</a>
             <button mat-button color="warn" (click)="onDelete(post.id)">DELETE</button>
           </mat-action-row>
-          <mat-action-row *ngIf="userIsAuthenticated && !isSeller">
-            <a mat-button color="primary" (click)="onAddItemsToCart2(post)">Add to Cart</a>
+          <div>
+            <mat-action-row *ngIf="userIsAuthenticated">
+            <a mat-button color="primary" (click)="onAddItemToCart(post)">Add to Cart</a>
             <button mat-button color="accent" [routerLink]="['/post-detail', post.id]">See Details</button>
           </mat-action-row>
+        </div>
         </mat-card-actions>
       </mat-card>
     </div>
