@@ -1,6 +1,6 @@
 <div class="listings">
-  <div fxLayout="row wrap"  fxLayoutGap="16px grid" *ngIf="userItems.length > 0">
-    <div fxFlex="25%" fxFlex.xs="100%" fxFlex.sm="33%" *ngFor="let item of userItems">
+  <div fxLayout="row wrap"  fxLayoutGap="16px grid" *ngIf="cartItems.length > 0">
+    <div fxFlex="25%" fxFlex.xs="100%" fxFlex.sm="33%" *ngFor="let item of cartItems">
       <mat-card class="mat-elevation-z4" >
         <mat-card-header>
           <mat-card-title>{{ item.title}}</mat-card-title>

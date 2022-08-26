@@ -28,6 +28,7 @@ exports.createPost = (req, res, next) => {
 };
 
 exports.addPostToCart = (req, res, next) => {
+  console.log("we are hitting the backend to add items to cart");
   const url = req.protocol + "://" + req.get("host");
   const post = new Post({
     title: req.body.title,
@@ -94,6 +95,28 @@ exports.getPosts = (req, res, next) => {
   if (pageSize && currentPage) {
     postQuery.skip(pageSize * (currentPage - 1)).limit(pageSize);
   }
+  postQuery
+    .then(documents => {
+      fetchedPosts = documents;
+      return Post.count();
+    })
+    .then(count => {
+      res.status(200).json({
+        message: "Posts fetched successfully!",
+        posts: fetchedPosts,
+        maxPosts: count
+      });
+    })
+    .catch(error => {
+      res.status(500).json({
+        message: "Fetching posts failed!"
+      });
+    });
+};
+
+exports.getCartPosts = (req, res, next) => {
+  const postQuery = Post.find();
+  let fetchedPosts;
   postQuery
     .then(documents => {
       fetchedPosts = documents;

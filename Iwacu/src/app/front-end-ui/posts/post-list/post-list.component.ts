@@ -20,6 +20,7 @@ export class PostListComponent implements OnInit, OnDestroy {
   //   { title: "Third Post", content: "This is the third post's content" }
   // ];
   posts: Post[] = [];
+  allPostsForCart: Post[] = [];
   isLoading = false;
   totalPosts = 0;
   postsPerPage = 5;
@@ -96,11 +97,9 @@ export class PostListComponent implements OnInit, OnDestroy {
           title: postData.title,
           content: postData.content,
           imagePath: postData.imagePath,
-          category: "clothes",
+          category: postData.category,
           creator: postData.creator
         };
-        console.log("this is the form output");
-
 
         this.form.setValue({
           title: this.postForCart.title,
@@ -109,16 +108,20 @@ export class PostListComponent implements OnInit, OnDestroy {
           image: this.postForCart.imagePath
         });
         console.log(this.form.value);
-        // find way to convert image url to path
+        // find way to not surpass cors
 
-        this.postsService.addPostToCart(this.form.value.title, this.form.value.content, this.form.value.category, this.form.value.image);
+        fetch(this.form.value.image, {mode: 'no-cors'})
+          .then(async response => {
+            const contentType = response.headers.get('content-type');
+            const blob = await response.blob();
+            // use mime type here instead
+            let metadata = {
+              type: 'image/jpeg'
+            };
+            const file = new File([blob], this.form.value.title, metadata);
+            this.postsService.addPostToCart(this.form.value.title, this.form.value.content, this.form.value.category, file);
+          });
       });
-
-      // save post
-      console.log(this.form.value.title);
-      console.log(this.form.value.image);
-
-
   }
 
   onChangedPage(pageData: PageEvent) {

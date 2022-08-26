@@ -13,6 +13,8 @@ router.post("", checkAuth, extractFile, postController.createPost);
 
 router.post("/my-cart", checkAuth, extractFile, postController.addPostToCart);
 
+router.get("/my-cart", checkAuth, extractFile, postController.getCartPosts);
+
 router.put("/:id",  checkAuth, extractFile, postController.updatePost);
 
 router.get("", postController.getPosts);
