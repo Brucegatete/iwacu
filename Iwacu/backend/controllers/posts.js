@@ -114,6 +114,28 @@ exports.getPosts = (req, res, next) => {
     });
 };
 
+exports.getCartPosts = (req, res, next) => {
+  const postQuery = Post.find();
+  let fetchedPosts;
+  postQuery
+    .then(documents => {
+      fetchedPosts = documents;
+      return Post.count();
+    })
+    .then(count => {
+      res.status(200).json({
+        message: "Posts fetched successfully!",
+        posts: fetchedPosts,
+        maxPosts: count
+      });
+    })
+    .catch(error => {
+      res.status(500).json({
+        message: "Fetching posts failed!"
+      });
+    });
+};
+
 
 exports.getPost = (req, res, next) => {
   Post.findById(req.params.id)

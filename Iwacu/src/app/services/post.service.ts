@@ -12,8 +12,8 @@ const BACKEND_URL = environment.apiUrl + "/posts/"
 @Injectable({ providedIn: "root" })
 export class PostsService {
   private posts: Post[] = [];
-  private userPosts: Post[] = [];
-  private userPostUpdated = new Subject<{userPosts: Post[]}>();
+  // private userPosts: Post[] = [];
+  // private userPostUpdated = new Subject<{userPosts: Post[]}>();
   private cartItems: Post[] = [];
   private cartItemsUpdated = new Subject<{cartItems: Post[]}>();
   private postsUpdated = new Subject<{ posts: Post[]; postCount: number }>();
@@ -65,9 +65,9 @@ export class PostsService {
     return this.postsUpdated.asObservable();
   }
 
-  getUserPostUpdatedListener() {
-    return this.userPostUpdated.asObservable();
-  }
+  // getUserPostUpdatedListener() {
+  //   return this.userPostUpdated.asObservable();
+  // }
 
   getCartItemsUpdatedListener() {
     return this.cartItemsUpdated.asObservable();
@@ -141,7 +141,7 @@ export class PostsService {
     postData.append("category", category);
     this.http
       .post<{ message: string; post: Post }>(
-        BACKEND_URL + "/my-cart/",
+        BACKEND_URL + "my-cart/",
         postData
       )
       .subscribe(responseData => {

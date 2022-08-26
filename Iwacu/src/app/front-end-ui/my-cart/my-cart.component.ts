@@ -13,7 +13,7 @@ import { Subscription } from "rxjs";
 
 export class MyCartComponent implements OnInit{
 
-  userItems: Post[] = [];
+  cartItems: Post[] = [];
   creatorId: string;
   private itemSub: Subscription;
 
@@ -22,23 +22,11 @@ export class MyCartComponent implements OnInit{
 
   ngOnInit(): void {
     this.creatorId = this.authService.getUserId();
-    console.log(this.creatorId);
-    // TODO -- OPTIMIZE THIS, THIS IS HIGHLY INEFFICIENT AND UNSCALLABLE IN CASE YOU HAVE TO PARSE MORE THAN 100 POSTS
     this.postsService.getUserCartItems();
     this.itemSub = this.postsService
       .getCartItemsUpdatedListener()
       .subscribe((cartItemsData: {cartItems: Post[]}) => {
-        console.log("this is the cart items");
-        this.route.params.subscribe(params => {
-          // need to grab posts from the backend
-          this.userItems = cartItemsData.cartItems;
-          console.log(cartItemsData)
-
-
-          // filter for only all the posts that the user has created
-          // this.userItems = this.userItems.filter(userItem => userItem.creator == this.creatorId)
-        });
-
+        this.cartItems = cartItemsData.cartItems;
       });
   }
 }
