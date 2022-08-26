@@ -97,7 +97,7 @@ export class PostListComponent implements OnInit, OnDestroy {
           title: postData.title,
           content: postData.content,
           imagePath: postData.imagePath,
-          category: "clothes",
+          category: postData.category,
           creator: postData.creator
         };
 
