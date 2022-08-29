@@ -49,6 +49,7 @@ export class PostListComponent implements OnInit, OnDestroy {
     this.isLoading = true;
     this.userId = this.authService.getUserId();
     this.postsService.getPosts(this.postsPerPage, this.currentPage, this.searchTerm);
+    this.userIsAuthenticated = this.authService.getIsAuth();
     if(this.userIsAuthenticated){
       this.isSeller = this.authService.getAuthData().userProfileType == "seller";
     }
@@ -78,55 +79,7 @@ export class PostListComponent implements OnInit, OnDestroy {
         this.userId = this.authService.getUserId();
       })
   }
-
-  //  not working now, need to go through router
-  onAddToCart(postId: string){
-    this.postIdForCart = postId;
-
-    this.form = new FormGroup({
-      title:  new FormControl(null, {validators: [Validators.required, Validators.minLength(3)]}),
-      content: new FormControl(null, {validators: [Validators.required]}),
-      category: new FormControl(null, {validators: [Validators.required]}),
-      image: new FormControl(null, {
-        validators: [Validators.required],
-        asyncValidators: [mimeType]
-      })
-    });
-      this.postsService.getPost(this.postIdForCart).subscribe(postData => {
-
-        this.postForCart = {
-          id: postData._id,
-          title: postData.title,
-          content: postData.content,
-          imagePath: postData.imagePath,
-          category: postData.category,
-          creator: postData.creator
-        };
-
-        this.form.setValue({
-          title: this.postForCart.title,
-          content: this.postForCart.content,
-          category: this.postForCart.category,
-          image: this.postForCart.imagePath
-        });
-        console.log(this.form.value);
-        // find way to not surpass cors
-
-        fetch(this.form.value.image, {mode: 'no-cors'})
-          .then(async response => {
-            const contentType = response.headers.get('content-type');
-            const blob = await response.blob();
-            // use mime type here instead
-            let metadata = {
-              type: 'image/jpeg'
-            };
-            const file = new File([blob], this.form.value.title, metadata);
-            this.postsService.addPostToCart(this.form.value.title, this.form.value.content, this.form.value.category, file);
-          });
-      });
-  }
-
-  onAddItemsToCart2(post: Post){
+  onAddItemToCart(post: Post){
     this.cartService.addToCart(post);
     window.alert("you just added the product to the cart");
   }

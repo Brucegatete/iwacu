@@ -21,15 +21,15 @@ export class MyCartComponent implements OnInit{
   constructor(public postsService: PostsService, private authService: AuthService, private route:ActivatedRoute, private cartService: CartService) {}
 
 
-  ngOnInit(): void {
-    // this.creatorId = this.authService.getUserId();
-    // this.postsService.getUserCartItems();
-    // this.itemSub = this.postsService
-    //   .getCartItemsUpdatedListener()
-    //   .subscribe((cartItemsData: {cartItems: Post[]}) => {
-    //     this.cartItems = cartItemsData.cartItems;
-    //   });
-
-    this.cartItems = this.cartService.getCartItems();
+  ngOnInit(){
+    this.cartService.getCartItems2();
+    this.itemSub = this.cartService
+      .getCartItemsUpdateListener()
+      .subscribe((postData: {cartItems: Post[]}) => {
+        this.route.params.subscribe(params => {
+          // need to grab posts from the backend
+            this.cartItems = postData.cartItems;
+          })
+        });
   }
 }
