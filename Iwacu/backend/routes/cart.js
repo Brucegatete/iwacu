@@ -9,6 +9,8 @@ const postController = require("../controllers/cart");
 
 const router = express.Router();
 
-router.post("/cart", checkAuth, extractFile, postController.addToCart);
+router.post("", checkAuth, extractFile, postController.addToCart);
 
-router.get("/cart", checkAuth, extractFile, postController.getCartItems);
+router.get("", checkAuth, extractFile, postController.getCartItems);
+
+module.exports = router;
