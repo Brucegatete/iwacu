@@ -6,8 +6,8 @@ exports.addToCart = (req, res, next) => {
     title: req.body.title,
     content: req.body.content,
     category: req.body.category,
-    imagePath: url + "/images/" + req.file.filename,
-    creator: req.userData.userId
+    imagePath: url + "/images/" + req.file.filename
+    // creator: req.userData.userId
   });
   cartPost
     .save()
@@ -21,6 +21,7 @@ exports.addToCart = (req, res, next) => {
       });
     })
     .catch(error => {
+      console.log(error);
       res.status(500).json({
         message: "Creating a post failed!"
       });
@@ -34,7 +35,8 @@ exports.getCartItems = (req, res, next) => {
   postQuery
     .then(documents => {
       fetchedPosts = documents;
-      return Post.count();
+      console.log(fetchedPosts);
+      return CartPost.count();
     })
     .then(count => {
       res.status(200).json({
@@ -44,8 +46,9 @@ exports.getCartItems = (req, res, next) => {
       });
     })
     .catch(error => {
+      console.log(error);
       res.status(500).json({
-        message: "Fetching posts failed!"
+        message: "Fetching posts failed bruv!"
       });
     });
 };

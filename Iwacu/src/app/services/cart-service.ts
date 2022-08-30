@@ -6,6 +6,7 @@ import { ActivatedRoute } from "@angular/router";
 import { Router } from "@angular/router";
 import { map } from "rxjs/operators";
 import { Subject } from "rxjs";
+import { PostsService } from "./post.service";
 
 
 const BACKEND_URL = environment.apiUrl + '/cart';
@@ -13,26 +14,27 @@ const BACKEND_URL = environment.apiUrl + '/cart';
 @Injectable({ providedIn: "root" })
 export class CartService{
 
-  constructor(private http: HttpClient, private router: Router){
+  constructor(private http: HttpClient, private router: Router, private postsService: PostsService){
 
   }
   cartItems: Post[] = [];
   private cartItemsUpdated = new Subject<{ cartItems: Post[]}>();
+  item: Post;
 
   addToCart(item: Post){
     this.cartItems.push(item);
   }
 
-  addToCart2(item: Post) {
-    const postData = new FormData();
-    postData.append("title", item.title);
-    postData.append("content", item.content);
-    postData.append("image", item.imagePath, item.title);
-    postData.append("category", item.category);
+  addItem2(title: string, content: string, category: string, image: File) {
+    const itemData = new FormData();
+    itemData.append("title", title);
+    itemData.append("content", content);
+    itemData.append("image", image, title);
+    itemData.append("category", category);
     this.http
       .post<{ message: string; post: Post }>(
         BACKEND_URL,
-        postData
+        itemData
       )
       .subscribe(responseData => {
         this.router.navigate(["/"]);
