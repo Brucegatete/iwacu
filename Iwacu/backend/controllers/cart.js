@@ -14,7 +14,7 @@ exports.addToCart = (req, res, next) => {
     .then(createdPost => {
       res.status(201).json({
         message: "Post added successfully",
-        post: {
+        cartPost: {
           ...createdPost,
           id: createdPost._id
         }
@@ -39,7 +39,7 @@ exports.getCartItems = (req, res, next) => {
     .then(count => {
       res.status(200).json({
         message: "Posts fetched successfully!",
-        posts: fetchedPosts,
+        cartPosts: fetchedPosts,
         maxPosts: count
       });
     })

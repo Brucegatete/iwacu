@@ -8,7 +8,7 @@ import { map } from "rxjs/operators";
 import { Subject } from "rxjs";
 
 
-const BACKEND_URL = environment.apiUrl + '/';
+const BACKEND_URL = environment.apiUrl + '/cart';
 
 @Injectable({ providedIn: "root" })
 export class CartService{
@@ -31,7 +31,7 @@ export class CartService{
     postData.append("category", item.category);
     this.http
       .post<{ message: string; post: Post }>(
-        BACKEND_URL + 'cart',
+        BACKEND_URL,
         postData
       )
       .subscribe(responseData => {
@@ -49,13 +49,13 @@ export class CartService{
 
   getCartItems2(){
     this.http
-      .get<{ message: string; posts: any; maxPosts: number }>(
-        BACKEND_URL + "cart"
+      .get<{ message: string; cartPosts: any; maxPosts: number }>(
+        BACKEND_URL
       )
       .pipe(
         map(postData => {
           return {
-            posts: postData.posts.map(post => {
+            cartPosts: postData.cartPosts.map(post => {
               return {
                 title: post.title,
                 content: post.content,
@@ -71,7 +71,7 @@ export class CartService{
       )
       .subscribe(transformedPostData => {
         console.log(transformedPostData)
-        this.cartItems = transformedPostData.posts;
+        this.cartItems = transformedPostData.cartPosts;
         this.cartItemsUpdated.next({
           cartItems: [...this.cartItems]
         });
