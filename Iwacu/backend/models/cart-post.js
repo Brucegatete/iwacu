@@ -5,7 +5,7 @@ const postSchema = mongoose.Schema({
   content: {type: String, required: true},
   imagePath: {type: String, required: true},
   category: {type: String, required: true},
-  creator: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true }
+  creator: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: false }
 });
 
 module.exports = mongoose.model('CartPost', postSchema);

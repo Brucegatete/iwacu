@@ -79,9 +79,15 @@ export class PostListComponent implements OnInit, OnDestroy {
         this.userId = this.authService.getUserId();
       })
   }
-  onAddItemToCart(post: Post){
-    this.cartService.addToCart(post);
-    window.alert("you just added the product to the cart");
+  async onAddItemToCart(post: Post){
+    let response = await fetch(post.imagePath, { mode: 'no-cors'});
+    let data = await response.blob();
+    let metadata = {
+      type: 'image/jpeg'
+    };
+    let file = new File([data], post.title, metadata);
+    // ... do something with the file or return it
+    this.cartService.addItem2(post.title, post.content, post.category, file);
   }
   onChangedPage(pageData: PageEvent) {
     this.isLoading = true;
@@ -100,4 +106,5 @@ export class PostListComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.postsSub.unsubscribe();
   }
+
 }
